@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campanha Dia dos Professores · Sr. Pão de Mel · ēdhen studio brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   BASE — mesmo sistema visual (cores, fontes, cursor, reveal on scroll)
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a18;
+  --creme:#eee9e0;
+  --creme2:#e8e2d6;
+  --ouro:#b89a6a;
+  --ouro-l:#d4b98a;
+  --surface:#252624;
+  --surface2:#1e1e1c;
+  --muted:rgba(238,233,224,.42);
+  --div:rgba(184,154,106,.15);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--surface2);color:var(--creme);font-family:var(--sans);font-weight:300;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cursor{position:fixed;width:7px;height:7px;background:var(--ouro);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(184,154,106,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .6s cubic-bezier(.16,1,.3,1),height .6s cubic-bezier(.16,1,.3,1),border-color .4s}
+#cursor-ring.hover{width:52px;height:52px;border-color:rgba(184,154,106,.6)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.vis{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}
+
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(184,154,106,.25),transparent)}
+.eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro);margin-bottom:1.5rem;display:block}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{min-height:92vh;background:var(--surface2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;padding:9vh 6vw;position:relative}
+.hero-icon{width:1px;height:64px;background:linear-gradient(to bottom,transparent,var(--ouro));margin:0 auto 2.2rem;opacity:0;transition:opacity 1.4s ease}
+.hero-icon.vis{opacity:1}
+.hero-tag{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro);margin-bottom:1.4rem;opacity:0;transition:opacity 1.2s .4s ease}
+.hero-tag.vis{opacity:1}
+.hero-title{font-family:var(--serif);font-size:clamp(2.4rem,7vw,5.2rem);font-weight:300;letter-spacing:-.02em;line-height:1.05;opacity:0;transform:translateY(18px);transition:opacity 1.4s .2s ease,transform 1.4s .2s ease}
+.hero-title.vis{opacity:1;transform:translateY(0)}
+.hero-brand{font-size:12px;letter-spacing:.12em;color:var(--creme2);margin-top:1.8rem;opacity:0;transition:opacity 1.2s .6s ease}
+.hero-brand.vis{opacity:1}
+
+.scroll-hint{position:absolute;bottom:3.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.75rem;opacity:0;transition:opacity 1.2s 1.3s ease}
+.scroll-hint.vis{opacity:1}
+.scroll-mouse{width:22px;height:36px;border:1px solid rgba(184,154,106,.45);border-radius:11px;display:flex;justify-content:center;padding-top:6px;cursor:pointer}
+.scroll-dot{width:3px;height:8px;background:var(--ouro);border-radius:2px;animation:scrollBounce 2.2s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:1}60%{transform:translateY(10px);opacity:.2}}
+.scroll-label{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(184,154,106,.5)}
+
+/* ==========================================================================
+   CALENDÁRIO
+   ========================================================================== */
+.s-cal{background:var(--surface);padding:12vh 6vw}
+.s-cal h2{font-family:var(--serif);font-size:clamp(2rem,3.6vw,3.8rem);font-weight:300;line-height:1.15;letter-spacing:-.015em;margin-bottom:1.2rem;max-width:820px}
+.s-cal h2 em{font-style:italic;color:var(--ouro-l)}
+.s-cal>.lead{font-size:14px;line-height:1.9;color:var(--muted);max-width:560px;margin-bottom:3rem}
+
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.filter-btn{font-family:var(--sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--div);padding:.65rem 1.2rem;cursor:pointer;white-space:nowrap;transition:all .3s ease}
+.filter-btn:hover{color:var(--creme);border-color:rgba(184,154,106,.4)}
+.filter-btn.active{color:var(--surface2);background:var(--ouro);border-color:var(--ouro)}
+
+.cal-list{display:flex;flex-direction:column;border-top:1px solid var(--div)}
+.cal-card{border-bottom:1px solid var(--div)}
+.cal-card.hide{display:none}
+.cal-head{display:grid;grid-template-columns:auto 1fr auto;gap:1.4rem;align-items:center;padding:1.8rem 0;cursor:pointer}
+.cal-card.static .cal-head{cursor:default}
+.cal-date-col{display:flex;flex-direction:column;gap:.5rem;min-width:92px}
+.cal-day{font-family:var(--serif);font-size:1.5rem;font-style:italic;color:var(--ouro-l)}
+.cal-status{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.cal-status .sdot{width:6px;height:6px;border-radius:50%;border:1px solid var(--ouro);flex-shrink:0}
+/* STATUS — troque a classe do card: st-fazer | st-producao | st-aprovacao | st-aprovado | st-publicado */
+.cal-status.st-fazer .sdot{background:transparent}
+.cal-status.st-producao .sdot{background:rgba(184,154,106,.35)}
+.cal-status.st-aprovacao .sdot{background:rgba(184,154,106,.65)}
+.cal-status.st-aprovado .sdot{background:var(--ouro)}
+.cal-status.st-publicado .sdot{background:var(--ouro);box-shadow:0 0 0 2px rgba(184,154,106,.25)}
+.cal-mid{min-width:0}
+.cal-meta{display:flex;gap:.7rem;align-items:center;margin-bottom:.5rem;flex-wrap:wrap}
+.cal-format{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);border:1px solid rgba(184,154,106,.4);padding:3px 10px}
+.cal-platform{font-size:10px;letter-spacing:.08em;color:var(--muted)}
+.cal-title{font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.5rem);font-weight:300;color:var(--creme);line-height:1.3}
+.cal-icon{font-size:24px;color:var(--ouro);font-family:var(--serif);font-style:italic;line-height:1;transition:transform .5s cubic-bezier(.16,1,.3,1);flex-shrink:0}
+.cal-card.open .cal-icon{transform:rotate(45deg)}
+
+.cal-body{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.16,1,.3,1)}
+.cal-card.open .cal-body{max-height:1800px}
+.cal-body-inner{padding:0 0 2.6rem;display:grid;gap:1.6rem;max-width:760px}
+.cal-field .field-label{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ouro);margin-bottom:.6rem}
+.cal-field p{font-size:13px;line-height:1.85;color:var(--creme2);white-space:pre-line}
+.cal-field p.script{font-family:var(--serif);font-style:italic;font-size:14.5px;line-height:1.9;color:var(--creme)}
+.cal-field ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.cal-field ul li{font-size:13px;line-height:1.7;color:var(--creme2);padding-left:1rem;position:relative}
+.cal-field ul li::before{content:"—";position:absolute;left:0;color:var(--ouro)}
+
+@media(max-width:700px){
+  .cal-head{grid-template-columns:1fr auto;grid-template-areas:"date icon" "mid mid"}
+  .cal-date-col{grid-area:date;flex-direction:row;align-items:center;gap:.8rem}
+  .cal-icon{grid-area:icon}
+  .cal-mid{grid-area:mid;margin-top:.9rem}
+}
+
+footer{background:var(--surface2);border-top:1px solid var(--div);padding:1.75rem 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+footer .brand{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ouro-l)}
+footer .copy{font-size:10px;color:rgba(238,233,224,.25);letter-spacing:.1em}
+
+@media(max-width:600px){
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-icon vis"></div>
+  <p class="hero-tag vis">Feed &amp; Stories</p>
+  <h1 class="hero-title vis">Campanha<br>Dia dos Professores</h1>
+  <p class="hero-brand vis">Sr. Pão de Mel · Setembro — Outubro 2026</p>
+  <div class="scroll-hint vis" id="scrollHint">
+    <div class="scroll-mouse" id="scrollMouse"><div class="scroll-dot"></div></div>
+    <span class="scroll-label">rolar</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CALENDÁRIO -->
+<section class="s-cal" id="calendario">
+  <span class="eyebrow reveal">Calendário</span>
+  <h2 class="reveal d1">Quatro datas.<br><em>Feed e Stories.</em></h2>
+  <p class="lead reveal d2">Clique em uma data para abrir o conteúdo.</p>
+
+  <div class="filters reveal d3">
+    <button class="filter-btn active" data-filter="todos">Todos</button>
+    <button class="filter-btn" data-filter="feed">Feed</button>
+    <button class="filter-btn" data-filter="stories">Stories</button>
+  </div>
+
+  <div class="cal-list reveal d4">
+
+    <!-- 30/09 — STORIES -->
+    <div class="cal-card" data-type="stories">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">30/09</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Stories</span><span class="cal-platform">Leide</span></div>
+          <h3 class="cal-title">Manifesto da campanha</h3>
+        </div>
+        <span class="cal-icon">+</span>
+      </div>
+      <div class="cal-body"><div class="cal-body-inner">
+        <div class="cal-field">
+          <span class="field-label">Direção</span>
+          <p>Sem roteiro excessivamente produzido. Leide falando para a câmera.</p>
+        </div>
+        <div class="cal-field">
+          <span class="field-label">Roteiro / Copy</span>
+          <p class="script">"Hoje eu mostrei para vocês a nossa coleção de Dia dos Professores. Mas eu queria explicar uma coisa que está por trás dela."
+
+"Eu não queria criar simplesmente uma lembrancinha."
+
+"Porque quando a gente pensa em professor, a gente está falando de uma profissão que participa da formação dos nossos filhos e da próxima geração."
+
+"E, ao mesmo tempo, todos nós conseguimos lembrar de algum professor que deixou uma marca na nossa própria vida."
+
+"É sobre isso que eu quero falar nesses próximos dias."</p>
+        </div>
+        <div class="cal-field">
+          <span class="field-label">Interação</span>
+          <p>Caixinha: "Qual professor marcou sua vida?"</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 05/10 — FEED -->
+    <div class="cal-card static" data-type="feed">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">05/10</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Feed</span><span class="cal-platform">Carrossel</span></div>
+          <h3 class="cal-title">Coleção + significado</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05/10 — STORIES -->
+    <div class="cal-card" data-type="stories">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">05/10</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Stories</span><span class="cal-platform">Leide · Vídeo curto</span></div>
+          <h3 class="cal-title">Ajuda na escolha do presente</h3>
+        </div>
+        <span class="cal-icon">+</span>
+      </div>
+      <div class="cal-body"><div class="cal-body-inner">
+        <div class="cal-field">
+          <span class="field-label">Roteiro / Copy</span>
+          <p class="script">"Se você ainda está em dúvida sobre o que dar para o professor do seu filho, eu queria te ajudar."
+
+Ela apresenta:
+
+"Essa opção é para quem quer algo mais delicado…"
+
+"Essa é uma opção mais completa…"
+
+"E essa aqui é perfeita para quem quer fazer uma homenagem maior…"</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 12/10 — FEED -->
+    <div class="cal-card static" data-type="feed">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">12/10</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Feed</span><span class="cal-platform">Foto / Reel</span></div>
+          <h3 class="cal-title">Homenagem</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12/10 — STORIES -->
+    <div class="cal-card" data-type="stories">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">12/10</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Stories</span><span class="cal-platform">Leide</span></div>
+          <h3 class="cal-title">Faltam X dias</h3>
+        </div>
+        <span class="cal-icon">+</span>
+      </div>
+      <div class="cal-body"><div class="cal-body-inner">
+        <div class="cal-field">
+          <span class="field-label">Sequência de Stories</span>
+          <ul>
+            <li>Story 01 — FALTAM X DIAS.</li>
+            <li>Story 02 — Os pedidos da coleção encerram dia XX/10.</li>
+            <li>Story 03 — Mostrar produtos.</li>
+            <li>Story 04 — Qual deles você escolheria? Enquete com duas opções.</li>
+            <li>Story 05 — Personalizamos seu presente.</li>
+            <li>Story 06 — Peça pelo link.</li>
+          </ul>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 15/10 — FEED -->
+    <div class="cal-card static" data-type="feed">
+      <div class="cal-head">
+        <div class="cal-date-col">
+          <span class="cal-day">15/10</span>
+          <span class="cal-status st-fazer"><span class="sdot"></span>A fazer</span>
+        </div>
+        <div class="cal-mid">
+          <div class="cal-meta"><span class="cal-format">Feed</span><span class="cal-platform">Post final</span></div>
+          <h3 class="cal-title">Dia dos Professores</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span class="brand">ēdhen studio brand</span>
+  <span class="copy">Sr. Pão de Mel · Campanha Dia dos Professores · 2026</span>
+</footer>
+
+<script>
+/* CURSOR CUSTOMIZADO */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+window.addEventListener('mousemove', e=>{
+  cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+  ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px';
+});
+document.querySelectorAll('a, button, .cal-card:not(.static) .cal-head').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>ring.classList.add('hover'));
+  el.addEventListener('mouseleave', ()=>ring.classList.remove('hover'));
+});
+
+/* REVEAL ON SCROLL */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('vis'); });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* SCROLL HINT */
+const scrollHint = document.getElementById('scrollHint');
+document.getElementById('scrollMouse').addEventListener('click', ()=>{
+  document.getElementById('calendario').scrollIntoView({behavior:'smooth'});
+});
+window.addEventListener('scroll', ()=>{
+  scrollHint.style.opacity = window.scrollY > 80 ? '0' : '1';
+});
+
+/* ACCORDION — só nos cards com conteúdo */
+document.querySelectorAll('.cal-card:not(.static) .cal-head').forEach(head=>{
+  head.addEventListener('click', ()=> head.closest('.cal-card').classList.toggle('open'));
+  head.setAttribute('tabindex','0');
+  head.setAttribute('role','button');
+  head.addEventListener('keydown', e=>{
+    if(e.key==='Enter' || e.key===' '){ e.preventDefault(); head.click(); }
+  });
+});
+
+/* FILTROS */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const calCards = document.querySelectorAll('.cal-card');
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    calCards.forEach(card=>{
+      card.classList.toggle('hide', !(f === 'todos' || card.dataset.type === f));
+    });
+  });
+});
+</script>
+
+</body>
+</html>
